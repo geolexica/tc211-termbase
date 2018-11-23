@@ -84,7 +84,7 @@ class TermsSection < SheetSection
       cleaned_value = value.gsub(/\s+/, ' ')
 
       matches = TERM_BODY_COLUMN_MAP.map do |key, value|
-        puts "key #{key}, value #{value}"
+        # puts "key #{key}, value #{value}"
         if cleaned_value[Regexp.new("^#{key}")]
           [key, value]
         end
@@ -121,7 +121,7 @@ class TermsSection < SheetSection
     attributes = {}
 
     structure.each_pair do |key, value|
-      puts "#{key}, #{value}, #{row[key]}"
+      # puts "#{key}, #{value}, #{row[key]}"
       attribute_key = value
       attribute_value = row[key]
       next if attribute_value.nil?

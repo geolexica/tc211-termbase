@@ -32,7 +32,7 @@ class Term
     @examples = []
     @notes = []
 
-    puts "options #{options.inspect}"
+    # puts "options #{options.inspect}"
 
     options.each_pair do |k, v|
       next unless v
@@ -42,7 +42,7 @@ class Term
       when /^note/
         @notes << v
       else
-        puts "Key #{k}"
+        # puts"Key #{k}"
         key = k.gsub("-", "_")
         self.send("#{key}=", v)
       end

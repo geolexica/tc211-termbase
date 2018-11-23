@@ -33,9 +33,9 @@ class MetadataSection < SheetSection
   end
 
   def self.match_header(row)
-    puts "row #{row}"
+    # puts "row #{row}"
     row.inject(true) do |acc, (key, value)|
-      puts "#{key}, #{value}"
+      # puts"#{key}, #{value}"
       if GLOSSARY_HEADER_ROW_MATCH[key]
         acc && GLOSSARY_HEADER_ROW_MATCH[key].include?(value)
       else
@@ -53,7 +53,7 @@ class MetadataSection < SheetSection
     attribute = {}
 
     structure.each_pair do |key, value|
-      puts "#{key}, #{value}, #{row[key]}"
+      # puts"#{key}, #{value}, #{row[key]}"
       attribute_key = value
       attribute_value = row[key]
       next if attribute_value.nil?

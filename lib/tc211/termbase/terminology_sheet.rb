@@ -58,14 +58,13 @@ class TerminologySheet
     @sections = []
     sections_raw.each_with_index do |x,i|
 
-      puts "--------- Section #{i} ------"
       section = if MetadataSection.match_header(x[0])
-        puts "------ is a MetadataSection"
-        puts "rows: #{x.inspect}"
+        puts "--------- Section #{i} is a MetadataSection ---------"
+        # puts "rows: #{x.inspect}"
         MetadataSection.new(x)
       else
-        puts "------ is a TermsSection"
-        puts "rows: #{x.inspect}"
+        puts "--------- Section #{i} is a TermsSection ---------"
+        # puts "rows: #{x.inspect}"
         TermsSection.new(x, {language_code: language_code})
       end
 
