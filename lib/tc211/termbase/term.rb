@@ -54,7 +54,7 @@ class Term
     ATTRIBS.inject({}) do |acc, attrib|
       value = self.send(attrib)
       unless value.nil?
-        acc.merge(attrib => value)
+        acc.merge(attrib.to_s => value)
       else
         acc
       end
