@@ -1,37 +1,65 @@
-= Tc211::Termbase
+= ISO/TC 211 Termbase programs
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/tc211/termbase`. To experiment with that code, run `bin/console` for an interactive prompt.
+This gem is used for the creation and deployment of the ISO/TC 211 Termbase
+located at https://terms.isotc211.com.
 
-== Installation
+The repository for the site is located at:
 
-Add this line to your application's Gemfile:
+* https://github.com/riboseinc/terms.isotc211.com
 
-```ruby
+== Install
+
+Add this line to your Gemfile:
+
+[source,ruby]
+----
 gem 'tc211-termbase'
-```
+----
 
 And then execute:
 
-    $ bundle
+[source,sh]
+----
+$ bundle
+----
 
 Or install it yourself as:
 
-    $ gem install tc211-termbase
+[source,sh]
+----
+$ gem install tc211-termbase
+----
+
 
 == Usage
 
-TODO: Write usage instructions here
+The gem comes with the following executables:
 
-== Development
+* `tc211-termbase-xlsx2yaml`: used to extract terms from the official
+  ISO/TC 211 terminology workbook, into ConceptYAML and TermYAML files.
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+=== Using `tc211-termbase-xlsx2yaml`
 
-== Contributing
+Run the following command:
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/riboseinc/tc211-termbase. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+[source,sh]
+----
+$ tc211-termbase-xlsx2yaml [termbase.xlsx]
+----
 
-== Code of Conduct
+Where,
 
-Everyone interacting in the Tc211::Termbase project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/riboseinc/tc211-termbase/blob/master/CODE_OF_CONDUCT.md).
+* the ConceptCollection YAML will be created at `[termbase.yaml]` at
+  the current working directory;
+
+* ConceptYAML files for each concept (each concept identified by a unique "`Term-ID`")
+  are created under the `concepts/` directory (based on the current working directory).
+  i.e. `concepts/concept-338.yaml`.
+
+
+== Credits
+
+This program is created and maintained by Ribose (the ISO/TC 211 Registration Authority)
+in conjunction with the ISO/TC 211 Terminology Management Group (TMG).
+
