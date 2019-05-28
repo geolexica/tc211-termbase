@@ -18,11 +18,14 @@ class TermsSection < SheetSection
   TERM_BODY_COLUMN_MAP = {
     "Term_ID" => "id",
     "Term" => "term",
-    "Term [OPERATING LANGUAGE]" => "term",
-    "Term_Abbreviation" => "abbrev",
+    "Term .OPERATING LANGUAGE." => "term",
+    # In the English sheet, column is named "Term Abbreviation"
+    "Term Abbreviation" => "abbrev",
+    # In other sheets, column named "Term_Abbreviation"
+    "Term_Abbreviation .OPERATING LANGUAGE." => "abbrev",
     "Country code" => "country-code",
     "Definition" => "definition",
-    "Term [OPERATING LANGUAGE - ALTERNATIVE CHARACTER SET]" => "alt",
+    "Term .OPERATING LANGUAGE - ALTERNATIVE CHARACTER SET." => "alt",
     "Term in English" => nil,
     "Entry Status" => "entry-status",
     ## Must be one of 'notValid' 'valid' 'superseded' 'retired'
