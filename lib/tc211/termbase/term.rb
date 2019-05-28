@@ -35,6 +35,7 @@ class Term
     # puts "options #{options.inspect}"
 
     options.each_pair do |k, v|
+      v = v.strip if v.is_a?(String)
       next unless v
       case k
       when /^example/
@@ -64,8 +65,15 @@ class Term
   # entry-status
   ## Must be one of notValid valid superseded retired
   def entry_status=(value)
-    unless %w(notValid valid superseded retired).include?(value)
-      value = "notValid"
+    case value
+    when "有效的", "käytössä", "действующий", "válido"
+      value = "valid"
+    when "korvattu", "reemplazado"
+      value = "superseded"
+    when "информация отсутствует" # "information absent"!?
+      value = "retired"
+    when %w(notValid valid superseded retired)
+      # do nothing
     end
     @entry_status = value
   end
@@ -73,8 +81,15 @@ class Term
   # classification
   ## Must be one of the following: preferred admitted deprecated
   def classification=(value)
-    unless %w(preferred admitted deprecated).include?(value)
+    case value
+    when ""
+      value = "admitted"
+    when "认可的", "допустимый", "admitido"
+      value = "admitted"
+    when "首选的", "suositettava", "suositeltava", "рекомендуемый", "preferente"
       value = "preferred"
+    when %w(preferred admitted deprecated)
+      # do nothing
     end
     @classification = value
   end
