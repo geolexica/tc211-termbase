@@ -1,11 +1,15 @@
 = ISO/TC 211 Termbase programs
 
-This gem is used for the creation and deployment of the ISO/TC 211 Termbase
-located at https://terms.isotc211.com.
+== Purpose
+
+This gem is used for the creation and deployment of Geolexica,
+the ISO/TC 211 Multi-Lingual Glossary Terminology database,
+located at https://www.geolexica.com.
 
 The repository for the site is located at:
 
-* https://github.com/riboseinc/terms.isotc211.com
+* https://github.com/ISO-TC211/geolexica.com
+
 
 == Install
 
@@ -33,10 +37,12 @@ $ gem install tc211-termbase
 
 == Usage
 
-The gem comes with the following executables:
+The gem comes with the following executable:
 
 * `tc211-termbase-xlsx2yaml`: used to extract terms from the official
   ISO/TC 211 terminology workbook, into ConceptYAML and TermYAML files.
+
+The MLGT XLSX file can be obtained from https://committee.iso.org/sites/tc211/home/re.html
 
 
 === Using `tc211-termbase-xlsx2yaml`
