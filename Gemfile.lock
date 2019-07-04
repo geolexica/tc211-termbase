@@ -1,22 +1,31 @@
 PATH
   remote: .
   specs:
-    tc211-termbase (0.1.1)
+    tc211-termbase (0.1.2)
       creek
       iso-639
+      relaton (~> 0.4.0)
 
 GEM
   remote: https://rubygems.org/
   specs:
     addressable (2.6.0)
       public_suffix (>= 2.0.2, < 4.0)
+    algoliasearch (1.26.0)
+      httpclient (~> 2.8, >= 2.8.3)
+      json (>= 1.5.1)
+    cnccs (0.1.3)
     creek (2.4.4)
       http (~> 4.0)
       nokogiri (>= 1.7.0)
       rubyzip (>= 1.0.0)
+    debase (0.2.2)
+      debase-ruby_core_source (>= 0.10.2)
+    debase-ruby_core_source (0.10.5)
     diff-lcs (1.3)
     domain_name (0.5.20180417)
       unf (>= 0.0.5, < 1.0.0)
+    gb-agencies (0.0.5)
     http (4.1.1)
       addressable (~> 2.3)
       http-cookie (~> 1.0)
@@ -26,12 +35,50 @@ GEM
       domain_name (~> 0.5)
     http-form_data (2.1.1)
     http_parser.rb (0.6.0)
+    httpclient (2.8.3)
     iso-639 (0.2.8)
-    mini_portile2 (2.4.0)
-    nokogiri (1.10.3)
-      mini_portile2 (~> 2.4.0)
-    public_suffix (3.1.0)
+    isoics (0.1.7)
+    json (2.2.0)
+    mini_portile2 (2.3.0)
+    nokogiri (1.8.5)
+      mini_portile2 (~> 2.3.0)
+    public_suffix (3.1.1)
     rake (10.5.0)
+    relaton (0.4.1)
+      algoliasearch
+      relaton-gb (~> 0.5.0)
+      relaton-iec (~> 0.3.0)
+      relaton-ietf (~> 0.5.0)
+      relaton-iso (~> 0.5.0)
+      relaton-iso-bib (~> 0.2.0)
+      relaton-itu (~> 0.2.0)
+      relaton-nist (~> 0.2.0)
+    relaton-bib (0.2.3)
+      addressable
+      nokogiri (~> 1.8.4)
+    relaton-gb (0.5.1)
+      cnccs (~> 0.1.1)
+      gb-agencies (~> 0.0.1)
+      relaton-iso-bib (~> 0.2.0)
+    relaton-iec (0.3.1)
+      addressable
+      relaton-iso-bib (~> 0.2.0)
+    relaton-ietf (0.5.3)
+      relaton-iso-bib (~> 0.2.0)
+    relaton-iso (0.5.1)
+      algoliasearch
+      relaton-iec (~> 0.3.0)
+      relaton-iso-bib (~> 0.2.0)
+    relaton-iso-bib (0.2.3)
+      isoics (~> 0.1.6)
+      nokogiri (~> 1.8.4)
+      relaton-bib (~> 0.2.0)
+      ruby_deep_clone (~> 0.8.0)
+    relaton-itu (0.2.1)
+      relaton-iso-bib (~> 0.2.0)
+    relaton-nist (0.2.2)
+      relaton-bib (~> 0.2.0)
+      rubyzip
     rspec (3.8.0)
       rspec-core (~> 3.8.0)
       rspec-expectations (~> 3.8.0)
@@ -45,6 +92,9 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.8.0)
     rspec-support (3.8.0)
+    ruby-debug-ide (0.7.0)
+      rake (>= 0.8.1)
+    ruby_deep_clone (0.8.0)
     rubyzip (1.2.3)
     unf (0.1.4)
       unf_ext
@@ -54,10 +104,12 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bundler (~> 1.17)
+  bundler (~> 2.0.1)
+  debase
   rake (~> 10.0)
   rspec (~> 3.0)
+  ruby-debug-ide
   tc211-termbase!
 
 BUNDLED WITH
-   1.17.3
+   2.0.1

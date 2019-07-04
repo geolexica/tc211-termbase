@@ -24,8 +24,11 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency "iso-639"
   spec.add_runtime_dependency "creek"
+  spec.add_runtime_dependency "relaton", "~>0.4.0"
 
-  spec.add_development_dependency "bundler", "~> 1.17"
+  spec.add_development_dependency "bundler", "~> 2.0.1"
+  spec.add_development_dependency "debase"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec", "~> 3.0"
+  spec.add_development_dependency "ruby-debug-ide"
 end
