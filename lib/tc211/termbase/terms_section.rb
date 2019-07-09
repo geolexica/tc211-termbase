@@ -159,7 +159,9 @@ module Tc211::Termbase
       when "authoritative-source"
         begin
           src = { "ref" => value }
-          item = RelatonDb.instance.fetch value
+          ref = value.match(/^[^,\()]+/).to_s.strip.sub(";", ":").
+                sub(/\u2011/, "-").sub(/IEC\sIEEE/, "IEC/IEEE")
+          item = RelatonDb.instance.fetch ref
           src["link"] = item.url if item
           src
         rescue RelatonBib::RequestError => e
