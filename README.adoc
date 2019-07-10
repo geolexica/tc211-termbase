@@ -4,11 +4,11 @@
 
 This gem is used for the creation and deployment of Geolexica,
 the ISO/TC 211 Multi-Lingual Glossary Terminology database,
-located at https://www.geolexica.com.
+located at https://www.geolexica.org.
 
 The repository for the site is located at:
 
-* https://github.com/ISO-TC211/geolexica.com
+* https://github.com/ISO-TC211/geolexica.org
 
 
 == Install
