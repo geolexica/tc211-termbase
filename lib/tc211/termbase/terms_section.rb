@@ -72,7 +72,7 @@ module Tc211::Termbase
 
     def initialize(rows, options={})
       super
-      raise StandardError.new("Does not match TermsSection header!") unless self.class.match_header(@rows[0])
+      self.class.match_header(@rows[0])
       @mapping_rows = @rows[0..1]
       @header_row = @rows[2]
       @body_rows = @rows[3..-1]
@@ -108,16 +108,25 @@ module Tc211::Termbase
       end
     end
 
-    def self.match_header(row)
+    def self.match_header(columns)
       # puts "row #{row}"
-      row.inject(true) do |acc, (key, value)|
+      columns.each do |key, value|
         # puts "#{key}, #{value}"
         if TERM_HEADER_ROW_MATCH[key]
-          acc && TERM_HEADER_ROW_MATCH[key].include?(value)
-        else
-          acc
+          unless TERM_HEADER_ROW_MATCH[key].include?(value)
+            raise RowHeaderMatchError.new("Terminology section header for column `#{key}` does not match expected value `#{value}`")
+          end
         end
       end
+
+      # row.inject(true) do |acc, (key, value)|
+      #   if TERM_HEADER_ROW_MATCH[key]
+      #     acc && TERM_HEADER_ROW_MATCH[key].include?(value)
+      #
+      #   else
+      #     acc
+      #   end
+      # end
     end
 
     def parse_row(row)

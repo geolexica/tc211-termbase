@@ -10,7 +10,7 @@ class MetadataSection < SheetSection
     "A" => [nil, "Item", "A"], # "Arabic" uses "A"
     "C" => ["Data Type"],
     "D" => ["Special Instruction"],
-    "E" => ["ISO 19135 Class.attribute"],
+    "E" => ["ISO 19135 Class.attribute", nil], # "Malay" has it empty ("")
     "F" => ["Domain"]
   }
 
@@ -25,24 +25,26 @@ class MetadataSection < SheetSection
 
   def initialize(rows, options={})
     super
-    raise unless self.class.match_header(@rows[0])
+
+    self.class.match_header(@rows[0])
     @header_row = @rows[0]
     @body_rows = @rows[1..-1]
     attributes
     self
   end
 
-  def self.match_header(row)
+  def self.match_header(columns)
     # puts "row #{row}"
-    row.inject(true) do |acc, (key, value)|
-      # puts"#{key}, #{value}"
+    columns.each do |key, value|
+      # puts "#{key}, #{value}"
       if GLOSSARY_HEADER_ROW_MATCH[key]
-        acc && GLOSSARY_HEADER_ROW_MATCH[key].include?(value)
-      else
-        acc
+        unless GLOSSARY_HEADER_ROW_MATCH[key].include?(value)
+          raise RowHeaderMatchError.new("Metadata section header for column `#{key}` does not match expected value `#{value}`")
+        end
       end
     end
   end
+
 
   def structure
     GLOSSARY_ROW_KEY_MAP

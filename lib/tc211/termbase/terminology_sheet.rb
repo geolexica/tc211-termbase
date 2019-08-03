@@ -57,16 +57,23 @@ class TerminologySheet
 
     @sections = []
     sections_raw.each_with_index do |x,i|
+      # puts "rows: #{x.inspect}"
 
-      section = if MetadataSection.match_header(x[0])
-        puts "--------- Section #{i} is a MetadataSection ---------"
-        # puts "rows: #{x.inspect}"
-        MetadataSection.new(x)
-      else
-        puts "--------- Section #{i} is a TermsSection ---------"
-        # puts "rows: #{x.inspect}"
-        TermsSection.new(x, {language_code: language_code})
+      section = nil
+      %w(MetadataSection TermsSection).each do |t|
+        break if section
+        begin
+          # puts "rows: #{x.inspect}"
+          section = ::Tc211::Termbase.const_get(t).new(x, {language_code: language_code})
+        rescue SheetSection::RowHeaderMatchError
+        end
       end
+
+      unless section
+        raise SheetSection::UnknownHeaderError.new("Unable to find header row match for section #{i} header, contents: #{x.inspect}")
+      end
+
+      puts "--------- Section #{i} is a #{section.class.name} ---------"
 
       @sections << section
     end

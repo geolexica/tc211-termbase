@@ -2,6 +2,10 @@
 module Tc211::Termbase
 
 class SheetSection
+
+  class RowHeaderMatchError < StandardError; end
+  class UnknownHeaderError < StandardError; end
+
   attr_accessor :sheet_content
 
   def initialize(rows, options={})
