@@ -1,6 +1,7 @@
 require_relative "sheet_section"
 require_relative "term"
 require_relative "relaton_db"
+require "relaton_bib"
 
 module Tc211::Termbase
 
@@ -167,13 +168,25 @@ module Tc211::Termbase
       case key
       when "authoritative-source"
         begin
-          src = { "ref" => value }
-          ref = value.match(/^[^,\()]+/).to_s.strip.sub(";", ":").
-                sub(/\u2011/, "-").sub(/IEC\sIEEE/, "IEC/IEEE")
-          item = RelatonDb.instance.fetch ref
+          raw_ref = value.match(/\A[^,\()]+/).to_s
+
+          clean_ref = raw_ref.
+            sub(";", ":").
+            sub(/\u2011/, "-").
+            sub(/IEC\sIEEE/, "IEC/IEEE")
+
+          clause = value.
+            gsub(raw_ref, "").
+            gsub(/\A,?\s+/,"")
+
+          item = ::Tc211::Termbase::RelatonDb.instance.fetch clean_ref
+
+          src = {}
+          src["ref"] = clean_ref
+          src["clause"] = clause unless clause.empty?
           src["link"] = item.url if item
           src
-        rescue RelatonBib::RequestError => e
+        rescue ::RelatonBib::RequestError => e
           warn e.message
           src
         end
