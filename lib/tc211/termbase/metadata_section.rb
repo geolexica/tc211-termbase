@@ -7,10 +7,18 @@ class MetadataSection < SheetSection
   attr_accessor :attributes
 
   GLOSSARY_HEADER_ROW_MATCH = {
-    "A" => [nil, "Item", "A"], # "Arabic" uses "A"
+    # "English" uses "".
+    # "Arabic" uses "A".
+    # This is fixed in the MLGT as of 2018 Aug 6.
+    "A" => [nil, "Item", "A"],
+
     "C" => ["Data Type"],
     "D" => ["Special Instruction"],
-    "E" => ["ISO 19135 Class.attribute", nil], # "Malay" has it empty ("")
+
+    # "Malay" has it empty ("")
+    # This is fixed in the MLGT as of 2018 Aug 6.
+    "E" => ["ISO 19135 Class.attribute", nil],
+
     "F" => ["Domain"]
   }
 

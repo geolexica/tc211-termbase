@@ -22,6 +22,7 @@ module Tc211::Termbase
       "Term" => "term",
       "Term .OPERATING LANGUAGE." => "term",
       # In the English sheet, column is named "Term Abbreviation"
+      # This is fixed in the MLGT as of 2018 Aug 6.
       "Term Abbreviation" => "abbrev",
       # In other sheets, column named "Term_Abbreviation"
       "Term_Abbreviation .OPERATING LANGUAGE." => "abbrev",
@@ -31,7 +32,12 @@ module Tc211::Termbase
       "Term in English" => nil,
       "Entry Status" => "entry-status",
       ## Must be one of 'notValid' 'valid' 'superseded' 'retired'
+
+      # "Term Clasification" is misspelt.
+      # This is fixed in the MLGT as of 2018 Aug 6.
       "Term Clasification" => "classification",
+      "Term Classification" => "classification",
+
       ## Must be one of the following 'preferred' 'admitted' 'deprecated'
       "Review Indicator" => "review-indicator",
       ## Must be one of the following <empty field> 'Under Review in Source Document'",
