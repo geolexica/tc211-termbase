@@ -39,9 +39,9 @@ class Term
       next unless v
       case k
       when /^example/
-        @examples << v
+        add_example(v)
       when /^note/
-        @notes << v
+        add_note(v)
       else
         # puts"Key #{k}"
         key = k.gsub("-", "_")
@@ -50,6 +50,93 @@ class Term
     end
     self
   end
+
+  STRIP_PUNCTUATION = [
+    "：",
+    ":",
+    ".",
+    "–",
+    " "
+  ]
+
+  # WARNING
+  # Always put the longer Regexp match in front!
+  EXAMPLE_PREFIXES = {
+    # TODO: fix this, we should not have "EXAMPLES"
+    eng: ["EXAMPLES", "EXAMPLE"],
+    ara: "مثال",
+    chi: "示例",
+    dan: "EKSEMPEL",
+    dut: "VOORBEELD",
+    fin: "ESIM",
+    fre: "Exemple",
+    # ger: "",
+    jpn: "例",
+    kor: "보기",
+    pol: "PRZYKŁAD",
+    may: "Contoh",
+    rus: "Пример",
+    spa: "Ejemplo",
+    swe: "Exempel"
+  }
+
+  # WARNING
+  # Always put the longer Regexp match in front!
+  NOTE_PREFIXES = {
+    eng: ["Note \\d to entry", "NOTE"],
+    ara: "ملاحظة",
+    chi: "注",
+    dan: "Note",
+    dut: "OPMERKING",
+    fin: "HUOM\\.?",  # Matches "HUOM", "HUOM.", "HUOM 1." and "HUOM. 1." (numeral added by the method)
+    fre: "A noter",
+    # ger: "",
+    jpn: "備考",
+    kor: "비고",
+    pol: "UWAGA",
+    may: "catatan",
+    rus: "нота",
+    spa: "Nota",
+    swe: ["Anm. \\d till termpost", "Anm. \\d till terpost", "Anm."]
+  }
+
+  # To match Chinese and Japanese numerals
+  ALL_FULL_HALF_WIDTH_NUMBERS = "[0-9０-９]"
+
+  def add_example(example)
+    c = clean_prefixed_string(example, EXAMPLE_PREFIXES)
+    @examples << c
+  end
+
+  def add_note(note)
+    c = clean_prefixed_string(note, NOTE_PREFIXES)
+    @notes << c
+  end
+
+  def clean_prefixed_string(string, criterion_map)
+    carry = string.strip
+    criterion_map.values.flatten.each do |mat|
+      # puts "example string: #{carry}, mat: #{mat}"
+
+      # puts "note string: #{carry}, mat: #{mat}"
+      # if @id == 318 and mat == "Nota" and string == "NOTA 1 Una operación tiene un nombre y una lista de parámetros."
+      #   require "pry"
+      #   binding.pry
+      # end
+
+      carry = carry.sub(
+        Regexp.new(
+          "^#{mat}\s*[#{STRIP_PUNCTUATION.join('')}]?" +
+          "\s*#{ALL_FULL_HALF_WIDTH_NUMBERS}*\s*"+
+          "[#{STRIP_PUNCTUATION.join('')}]?\s*",
+          Regexp::IGNORECASE
+        ),
+      '')
+    end
+
+    carry
+  end
+
 
   # The termid should ALWAYS be an integer.
   # https://github.com/riboseinc/tc211-termbase/issues/1
