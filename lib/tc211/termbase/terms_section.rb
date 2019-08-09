@@ -24,8 +24,10 @@ module Tc211::Termbase
       # In the English sheet, column is named "Term Abbreviation"
       # This is fixed in the MLGT as of 2018 Aug 6.
       "Term Abbreviation" => "abbrev",
+      "Term_Abbreviation" => "abbrev",
       # In other sheets, column named "Term_Abbreviation"
       "Term_Abbreviation .OPERATING LANGUAGE." => "abbrev",
+
       "Country code" => "country-code",
       "Definition" => "definition",
       "Term .OPERATING LANGUAGE - ALTERNATIVE CHARACTER SET." => "alt",
@@ -93,11 +95,15 @@ module Tc211::Termbase
 
         # convert whitespace to a single space
         cleaned_value = value.gsub(/\s+/, ' ')
+        # puts "cleaned_value #{cleaned_value}"
 
         matches = TERM_BODY_COLUMN_MAP.map do |key, value|
-          # puts "key #{key}, value #{value}"
-          if cleaned_value[Regexp.new("^#{key}")]
+          if match = cleaned_value[Regexp.new("^#{key}")]
+            # puts "matched! key #{key}, value #{value}, match (#{match}, #{match.length})"
             [key, value]
+          else
+            # puts "no match! key #{key}, value #{value}"
+            nil
           end
         end.compact
 
@@ -113,6 +119,9 @@ module Tc211::Termbase
         end
 
       end
+
+      # puts "============ structure is: #{@structure.inspect}"
+      @structure
     end
 
     def self.match_header(columns)
