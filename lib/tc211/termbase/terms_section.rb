@@ -90,7 +90,16 @@ module Tc211::Termbase
     end
 
     def structure
-      @structure ||= @header_row.inject({}) do |acc, (key, value)|
+      return @structure if @structure
+
+      header_mapping = parse_header_mapping
+      validate_header_mapping(header_mapping)
+
+      @structure = header_mapping
+    end
+
+    def parse_header_mapping
+      @header_row.inject({}) do |acc, (key, value)|
         # puts "#{key}, #{value}, #{GLOSSARY_HEADER_TITLES[value]}"
 
         # convert whitespace to a single space
@@ -119,9 +128,20 @@ module Tc211::Termbase
         end
 
       end
+    end
 
-      # puts "============ structure is: #{@structure.inspect}"
-      @structure
+    class HeaderMappingInvalidError < StandardError; end;
+
+    # Validate structure
+    # - should not have multiple columns mapping to the same key
+    def validate_header_mapping(header_mapping)
+      header_mapping.group_by do |k, v|
+        v
+      end.each do |k, v|
+        if v.length > 1
+          raise HeaderMappingInvalidError.new("Data key '#{k}' mapping from columns #{v.map(&:first)}; it should only be mapped from one column. Please check the TERM_BODY_COLUMN_MAP constant.")
+        end
+      end
     end
 
     def self.match_header(columns)
