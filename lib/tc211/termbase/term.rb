@@ -124,10 +124,11 @@ class Term
       #   binding.pry
       # end
 
+      # Arabic notes/examples sometimes use parantheses around numbers
       carry = carry.sub(
         Regexp.new(
           "^#{mat}\s*[#{STRIP_PUNCTUATION.join('')}]?" +
-          "\s*#{ALL_FULL_HALF_WIDTH_NUMBERS}*\s*"+
+          "\s*\\(?#{ALL_FULL_HALF_WIDTH_NUMBERS}*\\)?\s*"+
           "[#{STRIP_PUNCTUATION.join('')}]?\s*",
           Regexp::IGNORECASE
         ),
