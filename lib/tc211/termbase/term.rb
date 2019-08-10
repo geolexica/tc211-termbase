@@ -105,12 +105,12 @@ class Term
 
   def add_example(example)
     c = clean_prefixed_string(example, EXAMPLE_PREFIXES)
-    @examples << c
+    @examples << c unless c.empty?
   end
 
   def add_note(note)
     c = clean_prefixed_string(note, NOTE_PREFIXES)
-    @notes << c
+    @notes << c unless c.empty?
   end
 
   def clean_prefixed_string(string, criterion_map)
