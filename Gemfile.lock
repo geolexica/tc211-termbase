@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    tc211-termbase (0.1.9)
+    tc211-termbase (0.1.10)
       creek
       iso-639
       relaton (~> 0.5)
