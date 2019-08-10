@@ -67,7 +67,7 @@ class Term
     ara: "مثال",
     chi: "示例",
     dan: "EKSEMPEL",
-    dut: "VOORBEELD",
+    dut: ["VOORBEELD", "VOORBEELDEN"],
     fin: "ESIM",
     fre: "Exemple",
     # ger: "",
