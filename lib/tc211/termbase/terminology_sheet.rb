@@ -52,6 +52,14 @@ class TerminologySheet
     end
   end
 
+  def metadata_section
+    sections
+
+    sections.detect do |section|
+      section.is_a?(MetadataSection)
+    end
+  end
+
   def sections
     return @sections if @sections
 

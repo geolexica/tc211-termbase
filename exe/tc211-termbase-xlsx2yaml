@@ -22,29 +22,46 @@ end
 
 
 workbook = Tc211::Termbase::TermWorkbook.new(filepath)
-workbook.glossary_info.metadata_section.structure
-workbook.glossary_info.metadata_section.attributes
+# pp workbook.glossary_info.metadata_section.structure
+# pp workbook.glossary_info.metadata_section.attributes
 
-languages = {}
+registries = {}
 
 workbook.languages_supported.map do |lang|
   puts "************** WORKING ON LANGUAGE (#{lang})"
   sheet = workbook.language_sheet(lang)
   termsec = sheet.terms_section
-  languages[sheet.language_code] = termsec.terms
+  mdsec = sheet.metadata_section
+  registries[sheet.language_code] = {
+    metadata: mdsec.to_hash["metadata"],
+    terms: termsec.terms
+  }
 end
+
+output_dir = Dir.pwd
+
+metadata = {
+  'header' => workbook.glossary_info.metadata_section.to_hash["metadata"]
+}
+# Write registry metadata
+metadata['languages'] = registries.inject({}) do |acc, (lang, data)|
+  acc.merge({lang => data[:metadata]})
+end
+
+File.open(File.join(output_dir, Pathname.new(filepath).basename.sub_ext(".meta.yaml")),"w") do |file|
+  file.write(metadata.to_yaml)
+end
+
 
 collection = Tc211::Termbase::ConceptCollection.new
 
-languages.each_pair do |lang, terms|
-  terms.each do |term|
+registries.each_pair do |lang, data|
+  data[:terms].each do |term|
     collection.add_term(term)
   end
 end
 
 # collection[1206].inspect
-
-output_dir = Dir.pwd
 
 collection.to_file(File.join(output_dir, Pathname.new(filepath).basename.sub_ext(".yaml")))
 

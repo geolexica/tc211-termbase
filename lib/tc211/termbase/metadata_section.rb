@@ -58,20 +58,38 @@ class MetadataSection < SheetSection
     GLOSSARY_ROW_KEY_MAP
   end
 
+  def clean_key(k)
+    k.strip.
+      downcase.
+      gsub(/[()]/,"").
+      gsub(' ', '-')
+  end
+
+  def clean_value(v)
+    return nil if v.nil?
+
+    case v
+    when String
+      v.strip
+    else
+      v
+    end
+  end
+
   def parse_row(row)
     return nil if row.empty?
     attribute = {}
 
     structure.each_pair do |key, value|
       # puts"#{key}, #{value}, #{row[key]}"
-      attribute_key = value
-      attribute_value = row[key]
+      attribute_key = clean_key(value)
+      attribute_value = clean_value(row[key])
       next if attribute_value.nil?
       attribute[attribute_key] = attribute_value
     end
 
     # TODO: "Chinese" name is empty!
-    key = (attribute["name"] || "(empty)").downcase.split(" ").join("-")
+    key = clean_key(attribute["name"] || "(empty)")
 
     { key => attribute }
   end
@@ -87,9 +105,30 @@ class MetadataSection < SheetSection
     @attributes
   end
 
+  def fields
+
+    # "operating-language-country"=>
+    #  {"name"=>"Operating Language Country",
+    #   "value"=>"410",
+    #   "datatype"=>"Country Code",
+    #   "special-instruction"=>
+    #    "ftp.ics.uci.edu/pub/ietf/http/related/iso3166.txt",
+    #   "19135-class-attribute"=>"RE_Register.operatingLanguage",
+    #   "value-domain"=>
+    #    "<<Data Type>>RE_Locale.country \n" +
+    #    "[ISO 3166-1 3-character numeric country code]"},
+    #
+
+    attributes.inject({}) do |acc, (k, v)|
+      acc.merge({
+        k => v["value"]
+      })
+    end
+  end
+
   def to_hash
     {
-      "metadata" => attributes
+      "metadata" => fields
     }
   end
 
