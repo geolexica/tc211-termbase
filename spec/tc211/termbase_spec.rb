@@ -6,7 +6,7 @@ RSpec.describe Tc211::Termbase do
   it "runs the command without an error" do
     FileUtils.rm_rf "concepts" if File.exist? "concepts"
     FileUtils.rm "termbase.yaml" if File.exist? "termbase.yaml"
-    expect { `tc211-termbase-xlsx2yaml spec/fixtures/termbase.xlsx` }.
+    expect { `exe/tc211-termbase-xlsx2yaml spec/fixtures/termbase.xlsx` }.
       to_not output.to_stderr
   end
 end

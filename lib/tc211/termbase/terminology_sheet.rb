@@ -1,11 +1,10 @@
 require_relative "metadata_section"
 require_relative "terms_section"
-require "iso-639"
 
 module Tc211::Termbase
 
 class TerminologySheet
-  attr_accessor :sheet
+  attr_accessor :sheet, :language_code
 
   def initialize(sheet)
     @sheet = sheet
@@ -17,18 +16,23 @@ class TerminologySheet
   end
 
   def language_code
-    # Hack to make ISO_639 gem work...
-    lang = case language
-    when "Dutch"
-      "Dutch; Flemish"
-    when "Spanish"
-      "Spanish; Castilian"
+    return @language_code unless @language_code.nil?
+    raise StandardError.new("Language code not parsed yet for sheet: #{language}")
+  end
+
+  # Read language_code from sheet
+  def set_language_code(code)
+    # puts "language_code is #{code}"
+    return @language_code unless @language_code.nil?
+
+    @language_code = case code
+    when "dut/nld"
+      "dut"
+    when "工作语言代码"
+      "chn"
     else
-      language
+      code
     end
-    ISO_639.find_by_english_name(lang).alpha3
-  rescue
-    raise StandardError.new("Failed to find alpha3 code for language: #{lang}")
   end
 
   def sections_raw
@@ -72,13 +76,24 @@ class TerminologySheet
         break if section
         begin
           # puts "rows: #{x.inspect}"
-          section = ::Tc211::Termbase.const_get(t).new(x, {language_code: language_code})
+          section = ::Tc211::Termbase.const_get(t).new(x, {parent_sheet: self})
         rescue SheetSection::RowHeaderMatchError
         end
       end
 
       unless section
         raise SheetSection::UnknownHeaderError.new("Unable to find header row match for section #{i} header, contents: #{x.inspect}")
+      end
+
+      # MetadataSections always go first, so the language_code must already
+      # be set at the time of parsing the TermsSection
+      if section.is_a?(MetadataSection)
+        code = section.fields["operating-language-code"]
+        # puts "lang code is detected as #{code}, #{@language_code}"
+        unless code.nil?
+          # puts "setting lang code is detected as #{code}"
+          set_language_code(code)
+        end
       end
 
       puts "--------- Section #{i} is a #{section.class.name} ---------"

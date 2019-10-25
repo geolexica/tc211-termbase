@@ -85,7 +85,7 @@ module Tc211::Termbase
       @mapping_rows = @rows[0..1]
       @header_row = @rows[2]
       @body_rows = @rows[3..-1]
-      @language_code = options.delete(:language_code)
+      @language_code = options.delete(:parent_sheet).language_code
       self
     end
 
