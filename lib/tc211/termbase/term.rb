@@ -2,7 +2,7 @@ module Tc211::Termbase
 
 class Term
 
-  ATTRIBS = %i(
+  INPUT_ATTRIBS = %i(
     id term abbrev synonyms alt definition
     country_code
     language_code
@@ -26,7 +26,9 @@ class Term
     release
   )
 
-  attr_accessor *ATTRIBS
+  OUTPUT_ATTRIBS = INPUT_ATTRIBS - %i(term alt classification) + %i(terms)
+
+  attr_accessor *(INPUT_ATTRIBS | OUTPUT_ATTRIBS)
 
   def initialize(options={})
     @examples = []
@@ -146,7 +148,7 @@ class Term
   end
 
   def to_hash
-    ATTRIBS.inject({}) do |acc, attrib|
+    OUTPUT_ATTRIBS.inject({}) do |acc, attrib|
       value = self.send(attrib)
       unless value.nil?
         acc.merge(attrib.to_s => value)
@@ -240,6 +242,25 @@ class Term
     release >= 0
   end
 
+  def terms
+    [primary_term_hash, alt_term_hash].compact
+  end
+
+  def primary_term_hash
+    {
+      "type" => "expression",
+      "designation" => term,
+      "normative_status" => classification,
+    } if term
+  end
+
+  def alt_term_hash
+    {
+      "type" => "expression",
+      "designation" => alt,
+      "normative_status" => classification,
+    } if alt
+  end
 end
 
 end
