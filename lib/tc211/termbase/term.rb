@@ -79,7 +79,7 @@ class Term
     may: "Contoh",
     rus: "Пример",
     spa: "Ejemplo",
-    swe: "Exempel"
+    swe: "Exempel",
   }
 
   # WARNING
@@ -99,7 +99,7 @@ class Term
     may: "catatan",
     rus: "нота",
     spa: "Nota",
-    swe: ["Anm. \\d till termpost", "Anm. \\d till terpost", "Anm."]
+    swe: ["Anm. \\d till termpost", "Anm. \\d till terpost", "Anm."],
   }
 
   # To match Chinese and Japanese numerals
