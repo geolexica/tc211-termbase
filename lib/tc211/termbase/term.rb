@@ -65,41 +65,41 @@ class Term
   # Always put the longer Regexp match in front!
   EXAMPLE_PREFIXES = {
     # TODO: fix this, we should not have "EXAMPLES"
-    eng: ["EXAMPLES", "EXAMPLE"],
     ara: "مثال",
-    zho: "示例",
     dan: "EKSEMPEL",
-    nld: ["VOORBEELD", "VOORBEELDEN"],
+    # deu: "",
+    eng: ["EXAMPLES", "EXAMPLE"],
     fin: "ESIM",
     fra: "Exemple",
-    # deu: "",
     jpn: "例",
     kor: "보기",
-    pol: "PRZYKŁAD",
     msa: "Contoh",
+    nld: ["VOORBEELD", "VOORBEELDEN"],
+    pol: "PRZYKŁAD",
     rus: "Пример",
     spa: "Ejemplo",
     swe: "Exempel",
+    zho: "示例",
   }
 
   # WARNING
   # Always put the longer Regexp match in front!
   NOTE_PREFIXES = {
-    eng: ["Note \\d to entry", "NOTE"],
     ara: "ملاحظة",
-    zho: "注",
     dan: "Note",
-    nld: "OPMERKING",
+    # deu: "",
+    eng: ["Note \\d to entry", "NOTE"],
     fin: "HUOM\\.?",  # Matches "HUOM", "HUOM.", "HUOM 1." and "HUOM. 1." (numeral added by the method)
     fra: "A noter",
-    # deu: "",
     jpn: "備考",
     kor: "비고",
-    pol: "UWAGA",
     msa: "catatan",
+    nld: "OPMERKING",
+    pol: "UWAGA",
     rus: "нота",
     spa: "Nota",
     swe: ["Anm. \\d till termpost", "Anm. \\d till terpost", "Anm."],
+    zho: "注",
   }
 
   # To match Chinese and Japanese numerals
