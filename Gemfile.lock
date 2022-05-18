@@ -30,11 +30,13 @@ GEM
     iso639 (1.3.2)
     isoics (0.1.8)
     latex-decode (0.3.1)
-    mini_portile2 (2.4.0)
+    mini_portile2 (2.8.0)
     multipart-post (2.1.1)
-    nokogiri (1.10.9)
-      mini_portile2 (~> 2.4.0)
+    nokogiri (1.13.6)
+      mini_portile2 (~> 2.8.0)
+      racc (~> 1.4)
     public_suffix (4.0.5)
+    racc (1.6.0)
     rake (10.5.0)
     relaton (1.0.1)
       relaton-calconnect (~> 1.0.0)
@@ -110,7 +112,14 @@ GEM
 
 PLATFORMS
   ruby
+  ruby-unknown
+  tc211-unknown
+  unknown
+  unknown
+  unknown
+  unknown
 
+DEPENDENCIES
   bundler (>= 2.0.1, < 3)
   debase
   rake (~> 10.0)
