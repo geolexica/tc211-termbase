@@ -13,13 +13,13 @@ GEM
     bibtex-ruby (5.1.4)
       latex-decode (~> 0.0)
     cnccs (0.1.5)
-    creek (2.5.2)
+    creek (2.5.3)
       nokogiri (>= 1.10.0)
       rubyzip (>= 1.0.0)
     debase (0.2.4.1)
       debase-ruby_core_source (>= 0.10.2)
-    debase-ruby_core_source (0.10.9)
-    diff-lcs (1.3)
+    debase-ruby_core_source (0.10.17)
+    diff-lcs (1.5.0)
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
     faraday (1.0.1)
@@ -30,13 +30,15 @@ GEM
     iso639 (1.3.2)
     isoics (0.1.8)
     latex-decode (0.3.1)
-    mini_portile2 (2.4.0)
+    mini_portile2 (2.8.0)
     multipart-post (2.1.1)
-    nokogiri (1.10.9)
-      mini_portile2 (~> 2.4.0)
+    nokogiri (1.13.9)
+      mini_portile2 (~> 2.8.0)
+      racc (~> 1.4)
     public_suffix (4.0.5)
+    racc (1.6.0)
     rake (10.5.0)
-    relaton (1.0.1)
+    relaton (1.0.2)
       relaton-calconnect (~> 1.0.0)
       relaton-gb (~> 1.0.0)
       relaton-iec (~> 1.0.0)
@@ -48,7 +50,7 @@ GEM
       relaton-omg (~> 1.0.0)
       relaton-un (~> 1.0.0)
       relaton-w3c (~> 1.0.0)
-    relaton-bib (1.0.2)
+    relaton-bib (1.0.4)
       addressable
       bibtex-ruby
       iso639
@@ -63,8 +65,8 @@ GEM
     relaton-iec (1.0.0)
       addressable
       relaton-iso-bib (~> 1.0.0)
-    relaton-ietf (1.0.0)
-      relaton-bib (~> 1.0.0)
+    relaton-ietf (1.0.4)
+      relaton-bib (>= 1.0.4)
     relaton-iso (1.0.1)
       relaton-iec (~> 1.0.0)
       relaton-iso-bib (~> 1.0.0)
@@ -94,14 +96,14 @@ GEM
       rspec-mocks (~> 3.9.0)
     rspec-core (3.9.2)
       rspec-support (~> 3.9.3)
-    rspec-expectations (3.9.2)
+    rspec-expectations (3.9.4)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.9.0)
     rspec-mocks (3.9.1)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.9.0)
     rspec-support (3.9.3)
-    ruby-debug-ide (0.7.2)
+    ruby-debug-ide (0.7.3)
       rake (>= 0.8.1)
     rubyzip (2.3.0)
     unf (0.1.4)
@@ -110,7 +112,14 @@ GEM
 
 PLATFORMS
   ruby
+  ruby-unknown
+  tc211-unknown
+  unknown
+  unknown
+  unknown
+  unknown
 
+DEPENDENCIES
   bundler (>= 2.0.1, < 3)
   debase
   rake (~> 10.0)
