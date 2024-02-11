@@ -1,3 +1,4 @@
+require "glossarist"
 require "tc211/termbase/version"
 
 module Tc211

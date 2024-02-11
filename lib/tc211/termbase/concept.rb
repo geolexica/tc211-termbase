@@ -52,5 +52,84 @@ class Concept < Hash
     end
   end
 
+  def to_concept
+    concept = Glossarist::ManagedConcept.new(id: id)
+
+    terms.map do |term|
+      next if term.nil?
+
+      th = term.to_hash
+
+      th.delete(:term)
+
+      th[:id] = th[:termid]
+      th.delete(:termid)
+
+      if as = th.delete(:authoritative_source)
+        auth_source = {
+          origin: {
+            link: as[:link],
+            ref: as[:ref],
+            clause: as[:clause],
+          },
+          type: "authority",
+          status: "identical"
+        }
+        th[:sources] << auth_source
+      end
+
+      if ls = th.delete(:lineage_source)
+        lineage_source = {
+          origin: {
+            ref: lineage_source,
+            link: ls[:link],
+            clause: ls[:clause],
+          },
+          type: "lineage",
+          status: lineage_source_similarity
+        }
+        th[:sources] << lineage_source
+      end
+
+      pp th
+
+      localized_concept = Glossarist::LocalizedConcept.new(th)
+      # localized_concept.notes << Glossarist::DetailedDefinition.new(universal_entry.value)
+      localized_concept.sources = th[:sources]
+      concept.add_localization(localized_concept)
+
+    end
+
+    concept
+  end
+
 end
 end
+
+# term: abbreviation
+# termid: 2
+# eng:
+#   id: 2
+#   term: abbreviation
+#   definition: designation formed by omitting words or letters from a longer form
+#     and designating the same concept
+#   language_code: eng
+#   notes: []
+#   examples: []
+#   entry_status: valid
+#   classification: preferred
+#   authoritative_source:
+#     ref: ISO 1087-1:2000
+#     clause: 3.4.9
+#     link: https://www.iso.org/standard/20057.html
+#   lineage_source: ISO/TS 19104:2008
+#   lineage_source_similarity: 1
+#   date_accepted: 2008-11-15 00:00:00.000000000 +08:00
+#   review_date: 2013-01-29 00:00:00.000000000 +08:00
+#   review_status: final
+#   review_decision: accepted
+#   review_decision_date: 2016-10-01 00:00:00.000000000 +08:00
+#   review_decision_event: Publication of ISO 19104:2016
+#   review_decision_notes: Authoritative reference changed from ISO 1087-1:2000 to
+#     ISO 1087-1:2000, 3.4.9. Lineage source added as ISO/TS 19104:2008
+#   release: '2'

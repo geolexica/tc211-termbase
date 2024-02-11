@@ -23,9 +23,11 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_runtime_dependency "creek"
-  spec.add_runtime_dependency "relaton", "~> 1.0"
+  spec.add_runtime_dependency "relaton"
+  spec.add_runtime_dependency "glossarist", "~> 2.0"
 
-  spec.add_development_dependency "bundler", ">= 2.0.1", "< 3"
-  spec.add_development_dependency "rake", "~> 10.0"
-  spec.add_development_dependency "rspec", "~> 3.0"
+  spec.add_development_dependency "bundler"
+  spec.add_development_dependency "rake", "~> 13.0"
+  spec.add_development_dependency "rspec", "~> 3.12"
+
 end
