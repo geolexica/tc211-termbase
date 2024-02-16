@@ -63,15 +63,12 @@ end
 
 # collection[1206].inspect
 
-collection.to_file(File.join(output_dir, Pathname.new(filepath).basename.sub_ext(".yaml")))
-
 collection_output_dir = File.join(output_dir, "concepts")
 
 FileUtils.mkdir_p(collection_output_dir)
 
-collection.keys.each do |id|
-  collection[id].to_file(File.join(collection_output_dir, "concept-#{id}.yaml"))
-end
+concept_collection = collection.to_concept_collection
+concept_collection.save_to_files(collection_output_dir)
 
 # french = workbook.language_sheet("French")
 # french.sections[3].structure
