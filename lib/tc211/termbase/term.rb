@@ -130,7 +130,7 @@ module Tc211::Termbase
     end
 
     def clean_prefixed_string(string, criterion_map)
-      carry = string.strip
+      carry = string.to_s.strip
       criterion_map.values.flatten.each do |mat|
         # puts "example string: #{carry}, mat: #{mat}"
 
@@ -198,7 +198,7 @@ module Tc211::Termbase
       case value
       when ""
         value = "admitted"
-      when "认可的", "допустимый", "admitido"
+      when "认可的", "допустимый", "admitido", "adminitido"
         value = "admitted"
       when "首选的", "suositettava", "suositeltava", "рекомендуемый", "preferente"
         value = "preferred"

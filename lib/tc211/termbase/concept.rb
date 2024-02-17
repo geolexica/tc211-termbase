@@ -1,10 +1,12 @@
 module Tc211::Termbase
   class Concept < Hash
     attr_accessor :id
-    # attr_accessor :terms
-    DEFAULT_LANGUAGE = "eng"
 
-    def initialize(options={})
+    DEFAULT_LANGUAGE = "eng".freeze
+
+    def initialize(options = {})
+      super
+
       terms = options.delete(:terms) || []
       terms.each do |term|
         add_term(term)
@@ -26,7 +28,7 @@ module Tc211::Termbase
     end
 
     def terms
-      self.values
+      values
     end
 
     def default_term
@@ -56,7 +58,7 @@ module Tc211::Termbase
     end
 
     def to_glossarist_concept
-      concept = Glossarist::ManagedConcept.new(data: { id: id.to_s})
+      concept = Glossarist::ManagedConcept.new(data: { id: id.to_s })
 
       localized_concepts = []
 
@@ -70,7 +72,6 @@ module Tc211::Termbase
 
       concept
     end
-
   end
 end
 
@@ -79,8 +80,8 @@ end
 # eng:
 #   id: 2
 #   term: abbreviation
-#   definition: designation formed by omitting words or letters from a longer form
-#     and designating the same concept
+#   definition: designation formed by omitting words or letters from a longer
+#     form and designating the same concept
 #   language_code: eng
 #   notes: []
 #   examples: []
@@ -98,6 +99,6 @@ end
 #   review_decision: accepted
 #   review_decision_date: 2016-10-01 00:00:00.000000000 +08:00
 #   review_decision_event: Publication of ISO 19104:2016
-#   review_decision_notes: Authoritative reference changed from ISO 1087-1:2000 to
-#     ISO 1087-1:2000, 3.4.9. Lineage source added as ISO/TS 19104:2008
+#   review_decision_notes: Authoritative reference changed from ISO 1087-1:2000
+#     to ISO 1087-1:2000, 3.4.9. Lineage source added as ISO/TS 19104:2008
 #   release: '2'
