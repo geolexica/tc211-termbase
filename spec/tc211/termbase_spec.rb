@@ -85,7 +85,7 @@ RSpec.describe Tc211::Termbase do
               "data" => {
                 "dates" => [
                   {
-                    "date" => Time.parse("2008-11-15 00:00:00 +0500"),
+                    "date" => Time.parse("2008-11-15 00:00:00"),
                     "type" => "accepted",
                   },
                 ],
@@ -125,8 +125,8 @@ RSpec.describe Tc211::Termbase do
                 ],
                 "language_code" => "eng",
                 "entry_status" => "valid",
-                "review_date" => Time.parse("2013-01-29 00:00:00 +0500"),
-                "review_decision_date" => Time.parse("2016-10-01 00:00:00 +0500"),
+                "review_date" => Time.parse("2013-01-29 00:00:00"),
+                "review_decision_date" => Time.parse("2016-10-01 00:00:00"),
                 "review_decision_event" => "Publication of ISO 19104:2016"
               }
             }
