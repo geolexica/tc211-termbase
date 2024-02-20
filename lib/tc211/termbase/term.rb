@@ -220,7 +220,7 @@ module Tc211::Termbase
     # authoritative-source-similarity
     #     ## Must be one of the following codes: identical = 1 restyled = 2 context added = 3 generalisation = 4 specialisation = 5 unspecified = 6",
     def authoritative_source_similarity=(value)
-      unless (1..6).include?(value)
+      unless SOURCE_STATUSES.key?(value)
         value = 6
       end
       @authoritative_source_similarity = value
@@ -229,27 +229,30 @@ module Tc211::Termbase
     # lineage-source-similarity
     #     ## Must be one of the following codes: identical = 1 restyled = 2 context added = 3 generalisation = 4 specialisation = 5 unspecified = 6",
     def lineage_source_similarity=(value)
-      unless (1..6).include?(value)
+      unless SOURCE_STATUSES.key?(value)
         value = 6
       end
       @lineage_source_similarity = value
     end
 
-    def review_status=(value) ## Must be one of pending tentative final
+    ## value Must be one of pending tentative final
+    def review_status=(value)
       unless ["", "pending", "tentative", "final"].include?(value)
         value = ""
       end
       @review_status = value
     end
 
-    def review_type=(value)     ## Must be one of supersession, retirement
+    ## value Must be one of supersession, retirement
+    def review_type=(value)
       unless ["", "supersession", "retirement"].include?(value)
         value = ""
       end
       @review_type = value
     end
 
-    def review_decision=(value) ## Must be one of withdrawn, accepted notAccepted
+    ## value Must be one of withdrawn, accepted notAccepted
+    def review_decision=(value)
       unless ["", "withdrawn", "accepted", "notAccepted"].include?(value)
         value = ""
       end
@@ -270,33 +273,41 @@ module Tc211::Termbase
     end
 
     def primary_term_hash
+      return unless term
+
       {
         "type" => "expression",
         "designation" => term,
         "normative_status" => classification,
-      } if term
+      }
     end
 
     def alt_term_hash
+      return unless alt
+
       {
         "type" => "expression",
         "designation" => alt,
         "normative_status" => classification,
-      } if alt
+      }
     end
 
     def abbreviation_term_hash
+      return unless abbrev
+
       {
         "type" => "abbreviation",
         "designation" => abbrev,
-      } if abbrev
+      }
     end
 
     def synonyms_term_hash
+      return unless synonyms
+
       {
         "type" => "expression",
         "designation" => synonyms,
-      } if synonyms
+      }
     end
 
     def sources_hash
@@ -307,6 +318,8 @@ module Tc211::Termbase
     end
 
     def authoritative_source_hash
+      return unless authoritative_source
+
       {
         origin: {
           link: authoritative_source["link"],
@@ -315,17 +328,19 @@ module Tc211::Termbase
         },
         type: "authoritative",
         status: SOURCE_STATUSES[authoritative_source_similarity],
-      } if authoritative_source
+      }
     end
 
     def lineage_source_hash
+      return unless lineage_source
+
       {
         origin: {
           ref: lineage_source,
         },
         type: "lineage",
         status: SOURCE_STATUSES[lineage_source_similarity],
-      } if lineage_source
+      }
     end
 
     def to_localized_concept_hash

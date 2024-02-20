@@ -35,7 +35,8 @@ module Tc211::Termbase
       if self[DEFAULT_LANGUAGE]
         self[DEFAULT_LANGUAGE]
       else
-        puts "[tc211-termbase] term (lang: #{keys.first}, ID: #{id}) is missing a corresponding English term, probably needs updating."
+        puts "[tc211-termbase] term (lang: #{keys.first}, ID: #{id}) is \
+          missing a corresponding English term, probably needs updating."
         self[keys.first]
       end
     end

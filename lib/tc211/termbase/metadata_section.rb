@@ -44,10 +44,11 @@ module Tc211::Termbase
       # puts "row #{row}"
       columns.each do |key, value|
         # puts "#{key}, #{value}"
-        if GLOSSARY_HEADER_ROW_MATCH[key] && !GLOSSARY_HEADER_ROW_MATCH[key].include?(value)
+        header_row_match = GLOSSARY_HEADER_ROW_MATCH[key]
+        if header_row_match && !header_row_match.include?(value)
           raise RowHeaderMatchError.new(
             "Metadata section header for column `#{key}` does not match \
-            expected value `#{value}`"
+            expected value `#{value}`",
           )
         end
       end
@@ -59,9 +60,9 @@ module Tc211::Termbase
 
     def clean_key(key)
       key.strip
-         .downcase
-         .gsub(/[()]/, "")
-         .gsub(" ", "-")
+        .downcase
+        .gsub(/[()]/, "")
+        .gsub(" ", "-")
     end
 
     def clean_value(value)
@@ -124,7 +125,7 @@ module Tc211::Termbase
 
     def to_hash
       {
-        "metadata" => fields
+        "metadata" => fields,
       }
     end
   end
