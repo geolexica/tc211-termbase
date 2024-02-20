@@ -119,6 +119,8 @@ module Tc211::Termbase
       6 => "unspecified",
     }.freeze
 
+    CARRY_REGEX =
+
     def add_example(example)
       c = clean_prefixed_string(example, EXAMPLE_PREFIXES)
       @examples << c unless c.empty?
@@ -132,28 +134,22 @@ module Tc211::Termbase
     def clean_prefixed_string(string, criterion_map)
       carry = string.to_s.strip
       criterion_map.values.flatten.each do |mat|
-        # puts "example string: #{carry}, mat: #{mat}"
-
-        # puts "note string: #{carry}, mat: #{mat}"
-        # if @id == 318 and mat == "Nota" and string == "NOTA 1 Una operación tiene un nombre y una lista de parámetros."
-        #   require "pry"
-        #   binding.pry
-        # end
-
         # Arabic notes/examples sometimes use parantheses around numbers
-        carry = carry.sub(
-          Regexp.new(
-            "^#{mat}\s*[#{STRIP_PUNCTUATION.join('')}]?" +
-            "\s*\\(?#{ALL_FULL_HALF_WIDTH_NUMBERS}*\\)?\s*"+
-            "[#{STRIP_PUNCTUATION.join('')}]?\s*",
-            Regexp::IGNORECASE
-          ),
-        '')
+        carry = carry.sub(carry_regex(mat), "")
       end
 
       carry
     end
 
+    def carry_regex(mat)
+      Regexp.new(
+        [
+          "^#{mat}\s*[#{STRIP_PUNCTUATION.join}]?",
+          "\s*\\(?#{ALL_FULL_HALF_WIDTH_NUMBERS}*\\)?\s*",
+          "[#{STRIP_PUNCTUATION.join}]?\s*",
+        ].join,
+      )
+    end
 
     # The termid should ALWAYS be an integer.
     # https://github.com/riboseinc/tc211-termbase/issues/1
@@ -167,11 +163,11 @@ module Tc211::Termbase
 
     def to_hash
       OUTPUT_ATTRIBS.inject({}) do |acc, attrib|
-        value = self.send(attrib)
-        unless value.nil?
-          acc.merge(attrib.to_s => value)
-        else
+        value = send(attrib)
+        if value.nil?
           acc
+        else
+          acc.merge(attrib.to_s => value)
         end
       end
     end
@@ -186,8 +182,7 @@ module Tc211::Termbase
         value = "superseded"
       when "информация отсутствует" # "information absent"!?
         value = "retired"
-      when %w(notValid valid superseded retired)
-        # do nothing
+      when %w(notValid valid superseded retired) # do nothing
       end
       @entry_status = value
     end
@@ -196,9 +191,7 @@ module Tc211::Termbase
     ## Must be one of the following: preferred admitted deprecated
     def classification=(value)
       case value
-      when ""
-        value = "admitted"
-      when "认可的", "допустимый", "admitido", "adminitido"
+      when "", "认可的", "допустимый", "admitido", "adminitido"
         value = "admitted"
       when "首选的", "suositettava", "suositeltava", "рекомендуемый", "preferente"
         value = "preferred"
@@ -209,7 +202,9 @@ module Tc211::Termbase
     end
 
     # review-indicator
-    ## Must be one of the following <empty field> Under Review in Source Document",
+    #   Must be one of the following
+    #     <empty field>
+    #     Under Review in Source Document
     def review_indicator=(value)
       unless ["", "Under Review in Source Document"].include?(value)
         value = ""
@@ -218,7 +213,13 @@ module Tc211::Termbase
     end
 
     # authoritative-source-similarity
-    #     ## Must be one of the following codes: identical = 1 restyled = 2 context added = 3 generalisation = 4 specialisation = 5 unspecified = 6",
+    #   Must be one of the following codes:
+    #     identical = 1
+    #     restyled = 2
+    #     context added = 3
+    #     generalisation = 4
+    #     specialisation = 5
+    #     unspecified = 6
     def authoritative_source_similarity=(value)
       unless SOURCE_STATUSES.key?(value)
         value = 6
@@ -227,7 +228,13 @@ module Tc211::Termbase
     end
 
     # lineage-source-similarity
-    #     ## Must be one of the following codes: identical = 1 restyled = 2 context added = 3 generalisation = 4 specialisation = 5 unspecified = 6",
+    #   Must be one of the following codes:
+    #     identical = 1
+    #     restyled = 2
+    #     context added = 3
+    #     generalisation = 4
+    #     specialisation = 5
+    #     unspecified = 6
     def lineage_source_similarity=(value)
       unless SOURCE_STATUSES.key?(value)
         value = 6
