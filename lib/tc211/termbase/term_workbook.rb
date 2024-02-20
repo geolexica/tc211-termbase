@@ -7,15 +7,12 @@ require_relative "terminology_sheet"
 
 module Tc211::Termbase
   class TermWorkbook
-    attr_accessor :workbook
-    attr_accessor :glossary_info
-    attr_accessor :languages
-    attr_accessor :filename
+    attr_accessor :workbook, :glossary_info, :languages, :filename
 
     SPECIAL_SHEETS = [
       "Glossary Information",
-      "Character Encoding Spreadsheet"
-    ]
+      "Character Encoding Spreadsheet",
+    ].freeze
 
     def initialize(filepath)
       @filename = filepath
@@ -35,6 +32,7 @@ module Tc211::Termbase
 
     def language_sheet(lang)
       raise unless @languages.include?(lang)
+
       TerminologySheet.new(find_sheet_by_name(lang))
     end
 

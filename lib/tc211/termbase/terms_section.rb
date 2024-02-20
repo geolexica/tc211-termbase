@@ -5,8 +5,7 @@ require "relaton_bib"
 
 module Tc211::Termbase
   class TermsSection < SheetSection
-    attr_accessor :structure
-    attr_accessor :header_row
+    attr_accessor :structure, :header_row
 
     TERM_HEADER_ROW_MATCH = {
       "A" => ["ISO 19135 Field\nRE_RegisterItem.itemIdentifier"],
@@ -14,7 +13,7 @@ module Tc211::Termbase
       "C" => ["ISO 19135 Field\nRE_RegisterItem.\nalternativeExpression"],
       "D" => ["Country_Code"],
       # ... We don't need to match all the cells
-    }
+    }.freeze
 
     TERM_BODY_COLUMN_MAP = {
       "Term_ID" => "id",
@@ -74,9 +73,13 @@ module Tc211::Termbase
       "Note_7" => "note-7",
       "Example_8" => "example-8",
       "Note_8" => "note-8",
-      "Glossary Release" => "release"
-      ## Must be one of the following codes 'release1' = 1 'release1_retired' = -1 'release2' = 2 'release2_retired' = -2 etc "
-    }
+      "Glossary Release" => "release",
+      ## Must be one of the following codes
+      #   'release1' = 1
+      #   'release1_retired' = -1
+      #   'release2' = 2
+      #   'release2_retired' = -2 etc
+    }.freeze
 
     def initialize(rows, options={})
       super
@@ -125,7 +128,6 @@ module Tc211::Termbase
         else
           acc
         end
-
       end
     end
 
