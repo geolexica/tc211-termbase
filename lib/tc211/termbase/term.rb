@@ -329,7 +329,7 @@ module Tc211::Termbase
     end
 
     def to_localized_concept_hash
-      localized_concept_hash = self.to_hash
+      localized_concept_hash = to_hash
 
       %w[
         review_status

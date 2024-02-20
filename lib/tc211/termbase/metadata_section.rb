@@ -3,7 +3,7 @@ require_relative "sheet_section"
 module Tc211::Termbase
   class MetadataSection < SheetSection
     attr_accessor :header_row
-    attr_accessor :attributes
+    attr_writer :attributes
 
     GLOSSARY_HEADER_ROW_MATCH = {
       # "English" uses "".
@@ -18,8 +18,8 @@ module Tc211::Termbase
       # This is fixed in the MLGT as of 2018 Aug 6.
       "E" => ["ISO 19135 Class.attribute", nil],
 
-      "F" => ["Domain"]
-    }
+      "F" => ["Domain"],
+    }.freeze
 
     GLOSSARY_ROW_KEY_MAP = {
       "A" => "name",
@@ -27,10 +27,10 @@ module Tc211::Termbase
       "C" => "datatype",
       "D" => "special-instruction",
       "E" => "19135-class-attribute",
-      "F" => "value-domain"
-    }
+      "F" => "value-domain",
+    }.freeze
 
-    def initialize(rows, options={})
+    def initialize(rows, options = {})
       super
 
       self.class.match_header(@rows[0])
@@ -44,47 +44,47 @@ module Tc211::Termbase
       # puts "row #{row}"
       columns.each do |key, value|
         # puts "#{key}, #{value}"
-        if GLOSSARY_HEADER_ROW_MATCH[key]
-          unless GLOSSARY_HEADER_ROW_MATCH[key].include?(value)
-            raise RowHeaderMatchError.new("Metadata section header for column `#{key}` does not match expected value `#{value}`")
-          end
+        if GLOSSARY_HEADER_ROW_MATCH[key] && !GLOSSARY_HEADER_ROW_MATCH[key].include?(value)
+          raise RowHeaderMatchError.new(
+            "Metadata section header for column `#{key}` does not match \
+            expected value `#{value}`"
+          )
         end
       end
     end
-
 
     def structure
       GLOSSARY_ROW_KEY_MAP
     end
 
-    def clean_key(k)
-      k.strip.
-        downcase.
-        gsub(/[()]/,"").
-        gsub(' ', '-')
+    def clean_key(key)
+      key.strip
+         .downcase
+         .gsub(/[()]/, "")
+         .gsub(" ", "-")
     end
 
-    def clean_value(v)
-      return nil if v.nil?
+    def clean_value(value)
+      return nil if value.nil?
 
-      case v
+      case value
       when String
-        v.strip
+        value.strip
       else
-        v
+        value
       end
     end
 
     def parse_row(row)
       return nil if row.empty?
+
       attribute = {}
 
       structure.each_pair do |key, value|
-        # puts"#{key}, #{value}, #{row[key]}"
-        attribute_key = clean_key(value)
         attribute_value = clean_value(row[key])
         next if attribute_value.nil?
-        attribute[attribute_key] = attribute_value
+
+        attribute[clean_key(value)] = attribute_value
       end
 
       # TODO: "Chinese" name is empty!
@@ -105,7 +105,6 @@ module Tc211::Termbase
     end
 
     def fields
-
       # "operating-language-country"=>
       #  {"name"=>"Operating Language Country",
       #   "value"=>"410",
@@ -119,9 +118,7 @@ module Tc211::Termbase
       #
 
       attributes.inject({}) do |acc, (k, v)|
-        acc.merge({
-          k => v["value"]
-        })
+        acc.merge({ k => v["value"] })
       end
     end
 

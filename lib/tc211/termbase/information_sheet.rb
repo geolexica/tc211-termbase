@@ -4,7 +4,7 @@ module Tc211::Termbase
   class InformationSheet < TerminologySheet
     def metadata_section
       sheet_array = @sheet.simple_rows.to_a
-      section = MetadataSection.new(sheet_array)
+      MetadataSection.new(sheet_array)
     end
 
     def to_hash
