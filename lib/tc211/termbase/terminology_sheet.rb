@@ -16,7 +16,10 @@ module Tc211::Termbase
 
     def language_code
       return @language_code unless @language_code.nil?
-      raise StandardError.new("Language code not parsed yet for sheet: #{language}")
+
+      raise StandardError.new(
+        "Language code not parsed yet for sheet: #{language}",
+      )
     end
 
     # Read language_code from sheet
@@ -37,14 +40,13 @@ module Tc211::Termbase
     end
 
     def sections_raw
-      # Sections either start with "A" => "Item", or they have empty lines between
+      # Sections either start with "A" => "Item",
+      # or they have empty lines between
       raw_sections = @sheet.simple_rows.to_a
 
-      raw_sections.reject! do |section|
-        section.empty?
-      end
+      raw_sections.reject!(&:empty?)
 
-      raw_sections = raw_sections.slice_before do |row|
+      raw_sections.slice_before do |row|
         row["A"].to_s == "Item" || row["A"].to_s.match(/^ISO 19135 Field/)
       end.to_a
     end
@@ -70,20 +72,13 @@ module Tc211::Termbase
 
       @sections = []
       sections_raw.each_with_index do |x,i|
-        # puts "rows: #{x.inspect}"
-
-        section = nil
-        %w(MetadataSection TermsSection).each do |t|
-          break if section
-          begin
-            # puts "rows: #{x.inspect}"
-            section = ::Tc211::Termbase.const_get(t).new(x, {parent_sheet: self})
-          rescue SheetSection::RowHeaderMatchError
-          end
-        end
+        section = get_section(x)
 
         unless section
-          raise SheetSection::UnknownHeaderError.new("Unable to find header row match for section #{i} header, contents: #{x.inspect}")
+          raise SheetSection::UnknownHeaderError.new(
+            "Unable to find header row match for section #{i} header," +
+            " contents: #{x.inspect}",
+          )
         end
 
         # MetadataSections always go first, so the language_code must already
@@ -101,6 +96,23 @@ module Tc211::Termbase
 
         @sections << section
       end
+    end
+
+    def get_section(x)
+      section = nil
+
+      %w(MetadataSection TermsSection).each do |t|
+        break if section
+
+        begin
+          # puts "rows: #{x.inspect}"
+          section = ::Tc211::Termbase.const_get(t)
+            .new(x, { parent_sheet: self })
+        rescue SheetSection::RowHeaderMatchError
+        end
+      end
+
+      section
     end
   end
 end
