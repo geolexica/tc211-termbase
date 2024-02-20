@@ -20,7 +20,9 @@ module Tc211::Termbase
     def initialize(filepath)
       @filename = filepath
       @workbook = Creek::Book.new(filepath)
-      @glossary_info = InformationSheet.new(find_sheet_by_name("Glossary Information"))
+      @glossary_info = InformationSheet.new(
+        find_sheet_by_name("Glossary Information"),
+      )
       @languages = languages_supported
       self
     end
@@ -44,7 +46,7 @@ module Tc211::Termbase
 
     def write_glossary_info
       glossary_info_fn = Pathname.new(@filename).sub_ext(".yaml")
-      File.open(glossary_info_fn,"w") do |file|
+      File.open(glossary_info_fn, "w") do |file|
         file.write(glossary_info.to_yaml)
       end
     end

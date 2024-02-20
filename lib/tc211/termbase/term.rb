@@ -28,13 +28,13 @@ module Tc211::Termbase
       review_decision_event
       review_decision_notes
       release
-    )
+    ).freeze
 
     OUTPUT_ATTRIBS = INPUT_ATTRIBS - %i(term alt abbrev synonyms classification) + %i(terms)
 
     attr_accessor *(INPUT_ATTRIBS | OUTPUT_ATTRIBS)
 
-    def initialize(options={})
+    def initialize(options = {})
       @examples = []
       @notes = []
       @definition = []
@@ -44,6 +44,7 @@ module Tc211::Termbase
       options.each_pair do |k, v|
         v = v.strip if v.is_a?(String)
         next unless v
+
         case k
         when /^example/
           add_example(v)
@@ -52,7 +53,7 @@ module Tc211::Termbase
         else
           # puts"Key #{k}"
           key = k.gsub("-", "_")
-          self.send("#{key}=", v)
+          send("#{key}=", v)
         end
       end
       self
@@ -63,8 +64,8 @@ module Tc211::Termbase
       ":",
       ".",
       "–",
-      "\-"
-    ]
+      "\-",
+    ].freeze
 
     # WARNING
     # Always put the longer Regexp match in front!
@@ -84,8 +85,8 @@ module Tc211::Termbase
       may: "Contoh",
       rus: "Пример",
       spa: "Ejemplo",
-      swe: "Exempel"
-    }
+      swe: "Exempel",
+    }.freeze
 
     # WARNING
     # Always put the longer Regexp match in front!
@@ -95,7 +96,9 @@ module Tc211::Termbase
       chi: "注",
       dan: "Note",
       dut: "OPMERKING",
-      fin: "HUOM\\.?",  # Matches "HUOM", "HUOM.", "HUOM 1." and "HUOM. 1." (numeral added by the method)
+      # Matches "HUOM", "HUOM.", "HUOM 1." and "HUOM. 1."
+      # (numeral added by the method)
+      fin: "HUOM\\.?",
       fre: "A noter",
       # ger: "",
       jpn: "備考",
@@ -104,11 +107,11 @@ module Tc211::Termbase
       may: "catatan",
       rus: "нота",
       spa: "Nota",
-      swe: ["Anm. \\d till termpost", "Anm. \\d till terpost", "Anm."]
-    }
+      swe: ["Anm. \\d till termpost", "Anm. \\d till terpost", "Anm."],
+    }.freeze
 
     # To match Chinese and Japanese numerals
-    ALL_FULL_HALF_WIDTH_NUMBERS = "[0-9０-９]"
+    ALL_FULL_HALF_WIDTH_NUMBERS = "[0-9０-９]".freeze
 
     SOURCE_STATUSES = {
       1 => "identical",
@@ -118,8 +121,6 @@ module Tc211::Termbase
       5 => "specialisation",
       6 => "unspecified",
     }.freeze
-
-    CARRY_REGEX =
 
     def add_example(example)
       c = clean_prefixed_string(example, EXAMPLE_PREFIXES)
