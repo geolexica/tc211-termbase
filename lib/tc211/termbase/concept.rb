@@ -1,6 +1,6 @@
 module Tc211::Termbase
   class Concept < Hash
-    attr_accessor :id
+    attr_reader :id
 
     DEFAULT_LANGUAGE = "eng".freeze
 
@@ -12,8 +12,8 @@ module Tc211::Termbase
         add_term(term)
       end
 
-      options.each_pair do |k,v|
-        self.send("#{k}=", v)
+      options.each_pair do |k, v|
+        send("#{k}=", v)
       end
     end
 
@@ -43,16 +43,16 @@ module Tc211::Termbase
     def to_hash
       default_hash = {
         "term" => default_term.term,
-        "termid" => id
+        "termid" => id,
       }
 
-      self.inject(default_hash) do |acc, (lang, term)|
+      inject(default_hash) do |acc, (lang, term)|
         acc.merge!(lang => term.to_hash)
       end
     end
 
     def to_file(filename)
-      File.open(filename,"w") do |file|
+      File.open(filename, "w") do |file|
         file.write(to_hash.to_yaml)
       end
     end
