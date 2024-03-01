@@ -59,7 +59,7 @@ module Tc211::Termbase
     end
 
     def to_glossarist_concept
-      concept = Glossarist::ManagedConcept.new(data: { id: id.to_s })
+      concept = Tc211::Termbase::Glossarist::ManagedConcept.new(data: { id: id.to_s })
 
       localized_concepts = []
 

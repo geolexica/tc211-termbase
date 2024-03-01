@@ -339,6 +339,12 @@ module Tc211::Termbase
       }
     end
 
+    def authoritative_source_array
+      return unless authoritative_source
+
+      [ "link" => authoritative_source["link"] ]
+    end
+
     def lineage_source_hash
       return unless lineage_source
 
@@ -370,6 +376,8 @@ module Tc211::Termbase
 
       localized_concept_hash["id"] = localized_concept_hash["id"].to_s
       localized_concept_hash["sources"] = sources_hash
+
+      localized_concept_hash["authoritativeSource"] = authoritative_source_array if authoritative_source_array
 
       localized_concept_hash
     end

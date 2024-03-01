@@ -1,3 +1,5 @@
+require "pry"
+
 RSpec.describe Tc211::Termbase do
   it "has a version number" do
     expect(Tc211::Termbase::VERSION).not_to be nil
@@ -116,6 +118,9 @@ RSpec.describe Tc211::Termbase do
                     "status" => "identical",
                   },
                 ],
+                "authoritativeSource" => [
+                  { "link"=>"https://www.iso.org/standard/20057.html" }
+                ],
                 "terms" => [
                   {
                     "type" => "expression",
@@ -127,8 +132,11 @@ RSpec.describe Tc211::Termbase do
                 "entry_status" => "valid",
                 "review_date" => Time.parse("2013-01-29 00:00:00"),
                 "review_decision_date" => Time.parse("2016-10-01 00:00:00"),
-                "review_decision_event" => "Publication of ISO 19104:2016"
-              }
+                "review_decision_event" => "Publication of ISO 19104:2016",
+              },
+              "dateAccepted" => Time.parse("2008-11-15"),
+              "id" => "e59bc5ef-54aa-5d99-bf52-de87ea129979",
+              "status" => "valid"
             }
           end
 
