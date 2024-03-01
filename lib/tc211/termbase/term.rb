@@ -342,7 +342,9 @@ module Tc211::Termbase
     def authoritative_source_array
       return unless authoritative_source
 
-      [ "link" => authoritative_source["link"] ]
+      [
+        "link" => authoritative_source["link"],
+      ]
     end
 
     def lineage_source_hash
@@ -358,7 +360,7 @@ module Tc211::Termbase
     end
 
     def to_localized_concept_hash
-      localized_concept_hash = to_hash
+      concept_hash = to_hash
 
       %w[
         review_status
@@ -371,15 +373,17 @@ module Tc211::Termbase
         lineage_source_similarity
         country_code
       ].each do |key|
-        localized_concept_hash.delete(key)
+        concept_hash.delete(key)
       end
 
-      localized_concept_hash["id"] = localized_concept_hash["id"].to_s
-      localized_concept_hash["sources"] = sources_hash
+      concept_hash["id"] = concept_hash["id"].to_s
+      concept_hash["sources"] = sources_hash
 
-      localized_concept_hash["authoritativeSource"] = authoritative_source_array if authoritative_source_array
+      if authoritative_source_array
+        concept_hash["authoritativeSource"] = authoritative_source_array
+      end
 
-      localized_concept_hash
+      concept_hash
     end
   end
 end

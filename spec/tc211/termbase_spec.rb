@@ -1,5 +1,3 @@
-require "pry"
-
 RSpec.describe Tc211::Termbase do
   it "has a version number" do
     expect(Tc211::Termbase::VERSION).not_to be nil
@@ -105,7 +103,7 @@ RSpec.describe Tc211::Termbase do
                     "origin" => {
                       "ref" => "ISO 1087-1:2000",
                       "clause" => "3.4.9",
-                      "link" => "https://www.iso.org/standard/20057.html"
+                      "link" => "https://www.iso.org/standard/20057.html",
                     },
                     "type" => "authoritative",
                     "status" => "identical",
@@ -119,7 +117,7 @@ RSpec.describe Tc211::Termbase do
                   },
                 ],
                 "authoritativeSource" => [
-                  { "link"=>"https://www.iso.org/standard/20057.html" }
+                  { "link" => "https://www.iso.org/standard/20057.html" },
                 ],
                 "terms" => [
                   {
@@ -136,7 +134,7 @@ RSpec.describe Tc211::Termbase do
               },
               "dateAccepted" => Time.parse("2008-11-15"),
               "id" => "e59bc5ef-54aa-5d99-bf52-de87ea129979",
-              "status" => "valid"
+              "status" => "valid",
             }
           end
 

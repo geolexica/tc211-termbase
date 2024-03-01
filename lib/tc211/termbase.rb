@@ -12,8 +12,15 @@ module Tc211
     ::Glossarist.configure do |config|
       config.register_extension_attributes(["authoritativeSource"])
 
-      config.register_class(:localized_concept, Tc211::Termbase::Glossarist::Concept)
-      config.register_class(:managed_concept, Tc211::Termbase::Glossarist::ManagedConcept)
+      config.register_class(
+        :localized_concept,
+        Tc211::Termbase::Glossarist::Concept,
+      )
+
+      config.register_class(
+        :managed_concept,
+        Tc211::Termbase::Glossarist::ManagedConcept,
+      )
     end
   end
 end
