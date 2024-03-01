@@ -133,7 +133,7 @@ RSpec.describe Tc211::Termbase do
                 "review_decision_event" => "Publication of ISO 19104:2016",
               },
               "dateAccepted" => Time.parse("2008-11-15"),
-              "id" => "e59bc5ef-54aa-5d99-bf52-de87ea129979",
+              "id" => localized_concept.uuid,
               "status" => "valid",
             }
           end
