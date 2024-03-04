@@ -103,7 +103,7 @@ RSpec.describe Tc211::Termbase do
                     "origin" => {
                       "ref" => "ISO 1087-1:2000",
                       "clause" => "3.4.9",
-                      "link" => "https://www.iso.org/standard/20057.html"
+                      "link" => "https://www.iso.org/standard/20057.html",
                     },
                     "type" => "authoritative",
                     "status" => "identical",
@@ -116,6 +116,9 @@ RSpec.describe Tc211::Termbase do
                     "status" => "identical",
                   },
                 ],
+                "authoritativeSource" => [
+                  { "link" => "https://www.iso.org/standard/20057.html" },
+                ],
                 "terms" => [
                   {
                     "type" => "expression",
@@ -127,8 +130,11 @@ RSpec.describe Tc211::Termbase do
                 "entry_status" => "valid",
                 "review_date" => Time.parse("2013-01-29 00:00:00"),
                 "review_decision_date" => Time.parse("2016-10-01 00:00:00"),
-                "review_decision_event" => "Publication of ISO 19104:2016"
-              }
+                "review_decision_event" => "Publication of ISO 19104:2016",
+              },
+              "dateAccepted" => Time.parse("2008-11-15"),
+              "id" => localized_concept.uuid,
+              "status" => "valid",
             }
           end
 

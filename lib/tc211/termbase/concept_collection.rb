@@ -26,7 +26,7 @@ module Tc211::Termbase
     end
 
     def to_concept_collection
-      collection = Glossarist::ManagedConceptCollection.new
+      collection = ::Glossarist::ManagedConceptCollection.new
 
       values.each do |term_concept|
         next if term_concept.nil?
