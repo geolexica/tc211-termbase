@@ -213,6 +213,11 @@ module Tc211::Termbase
       @review_indicator = value
     end
 
+    def authoritative_source=(source)
+      clean_source!(source)
+      @authoritative_source = source
+    end
+
     # authoritative-source-similarity
     #   Must be one of the following codes:
     #     identical = 1
@@ -228,6 +233,11 @@ module Tc211::Termbase
       @authoritative_source_similarity = value
     end
 
+    def lineage_source=(source)
+      clean_source!(source)
+      @lineage_source = source
+    end
+
     # lineage-source-similarity
     #   Must be one of the following codes:
     #     identical = 1
@@ -241,6 +251,15 @@ module Tc211::Termbase
         value = 6
       end
       @lineage_source_similarity = value
+    end
+
+    def clean_source!(source)
+      if source.is_a?(Hash)
+        source["ref"].gsub!(/\(E\),?\s*/, "") if source["ref"]
+        source["clause"].gsub!(/\(E\),?\s*/, "") if source["clause"]
+      else
+        source.gsub!(/\(E\),?\s*/, "")
+      end
     end
 
     ## value Must be one of pending tentative final
