@@ -255,8 +255,8 @@ module Tc211::Termbase
 
     def clean_source!(source)
       if source.is_a?(Hash)
-        source["ref"].gsub!(/\(E\),?\s*/, "") if source["ref"]
-        source["clause"].gsub!(/\(E\),?\s*/, "") if source["clause"]
+        source["ref"]&.gsub!(/\(E\),?\s*/, "")
+        source["clause"]&.gsub!(/\(E\),?\s*/, "")
       else
         source.gsub!(/\(E\),?\s*/, "")
       end
