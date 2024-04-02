@@ -116,9 +116,6 @@ RSpec.describe Tc211::Termbase do
                     "status" => "identical",
                   },
                 ],
-                "authoritativeSource" => [
-                  { "link" => "https://www.iso.org/standard/20057.html" },
-                ],
                 "terms" => [
                   {
                     "type" => "expression",
