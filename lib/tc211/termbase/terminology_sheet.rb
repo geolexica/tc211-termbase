@@ -29,7 +29,7 @@ module Tc211::Termbase
 
       @language_code = case code
       when "dut/nld"
-        "dut"
+        "nld"
       when "chi"
         "zho"
       when "ger"
