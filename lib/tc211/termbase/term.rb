@@ -70,44 +70,42 @@ module Tc211::Termbase
     # WARNING
     # Always put the longer Regexp match in front!
     EXAMPLE_PREFIXES = {
+      ara: "مثال",
+      dan: "EKSEMPEL",
+      # deu: "",
       # TODO: fix this, we should not have "EXAMPLES"
       eng: ["EXAMPLES", "EXAMPLE"],
-      ara: "مثال",
-      zho: "示例",
-      dan: "EKSEMPEL",
-      nld: ["VOORBEELD", "VOORBEELDEN"],
       fin: "ESIM",
       fra: "Exemple",
-      # deu: "",
       jpn: "例",
       kor: "보기",
-      pol: "PRZYKŁAD",
       msa: "Contoh",
+      nld: ["VOORBEELD", "VOORBEELDEN"],
+      pol: "PRZYKŁAD",
       rus: "Пример",
       spa: "Ejemplo",
       swe: "Exempel",
+      zho: "示例",
     }.freeze
 
     # WARNING
     # Always put the longer Regexp match in front!
     NOTE_PREFIXES = {
-      eng: ["Note \\d to entry", "NOTE"],
       ara: "ملاحظة",
-      zho: "注",
       dan: "Note",
-      nld: "OPMERKING",
-      # Matches "HUOM", "HUOM.", "HUOM 1." and "HUOM. 1."
-      # (numeral added by the method)
-      fin: "HUOM\\.?",
-      fra: "A noter",
       # deu: "",
+      eng: ["Note \\d to entry", "NOTE"],
+      fin: "HUOM\\.?", # Matches "HUOM", "HUOM.", "HUOM 1." and "HUOM. 1." (numeral added by the method)
+      fra: "A noter",
       jpn: "備考",
       kor: "비고",
-      pol: "UWAGA",
       msa: "catatan",
+      nld: "OPMERKING",
+      pol: "UWAGA",
       rus: "нота",
       spa: "Nota",
       swe: ["Anm. \\d till termpost", "Anm. \\d till terpost", "Anm."],
+      zho: "注",
     }.freeze
 
     # To match Chinese and Japanese numerals
