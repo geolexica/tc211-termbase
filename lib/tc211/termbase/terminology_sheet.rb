@@ -30,6 +30,11 @@ module Tc211::Termbase
       @language_code = case code
       when "dut/nld"
         "dut"
+      when "chi"
+        "zho"
+      when "ger"
+        "deu"
+      # below for backwards compatibility
       when "工作语言代码"
         "chn"
       when "pl"
