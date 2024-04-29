@@ -24,7 +24,7 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency "creek"
   spec.add_runtime_dependency "relaton"
-  spec.add_runtime_dependency "glossarist", "~> 2.0"
+  spec.add_runtime_dependency "glossarist", "~> 2.1"
 
   spec.add_development_dependency "bundler"
   spec.add_development_dependency "rake", "~> 13.0"
