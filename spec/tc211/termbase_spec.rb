@@ -28,7 +28,9 @@ RSpec.describe Tc211::Termbase do
 
     context "localized_concept" do
       describe "validate count" do
-        let(:localized_concepts_count) { Dir.glob("concepts/localized_concept/*").count }
+        let(:localized_concepts_count) do
+          Dir.glob("concepts/localized_concept/*").count
+        end
 
         it "should to be 193" do
           expect(localized_concepts_count).to eq(193)
@@ -36,12 +38,17 @@ RSpec.describe Tc211::Termbase do
       end
 
       describe "validate uuids" do
-        let(:localized_concept_files) { Dir.glob("concepts/localized_concept/*") }
+        let(:localized_concept_files) do
+          Dir.glob("concepts/localized_concept/*")
+        end
 
         it "should match filenames to ids" do
           localized_concept_files.each do |localized_concept_file|
             filename = File.basename(localized_concept_file, ".yaml")
-            localized_concept = YAML.load(File.read(localized_concept_file), permitted_classes: [Date, Time])
+            localized_concept = YAML.safe_load(
+              File.read(localized_concept_file),
+              permitted_classes: [Date, Time],
+            )
 
             expect(localized_concept["id"]).to eq(filename)
           end
