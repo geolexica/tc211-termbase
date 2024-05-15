@@ -162,6 +162,22 @@ RSpec.describe Tc211::Termbase do
           end
         end
       end
+
+      context "concept 18" do
+        let(:concept) { collection.fetch("18") }
+
+        it "should have 11 localized concepts" do
+          expect(concept.localized_concepts.count).to be(11)
+        end
+
+        context "dan localization with status missing in file" do
+          let(:localized_concept) { concept.localization("dan") }
+
+          it "should have status=valid" do
+            expect(localized_concept.status).to eq("valid")
+          end
+        end
+      end
     end
   end
 end
