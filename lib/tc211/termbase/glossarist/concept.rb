@@ -24,7 +24,7 @@ module Tc211
           {
             "dateAccepted" => date_accepted&.date&.dup,
             "id" => uuid,
-            "status" => entry_status,
+            "status" => entry_status || "valid",
           }.compact
         end
       end
