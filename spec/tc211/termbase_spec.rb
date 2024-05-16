@@ -163,6 +163,22 @@ RSpec.describe Tc211::Termbase do
         end
       end
 
+      context "concept 11" do
+        let(:concept) { collection.fetch("11") }
+
+        it "should have 11 localized concepts" do
+          expect(concept.localized_concepts.count).to be(11)
+        end
+
+        context "eng localization" do
+          let(:localized_concept) { concept.localization("eng") }
+
+          it "should have UML as domain" do
+            expect(localized_concept.domain).to eq("UML")
+          end
+        end
+      end
+
       context "concept 18" do
         let(:concept) { collection.fetch("18") }
 

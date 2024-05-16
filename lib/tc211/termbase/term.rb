@@ -11,6 +11,7 @@ module Tc211::Termbase
       language_code
       notes
       examples
+      domain
       entry_status
       classification
       review_indicator
@@ -119,6 +120,8 @@ module Tc211::Termbase
       5 => "specialisation",
       6 => "unspecified",
     }.freeze
+
+    DOMAIN_REGEX = /^(.*?)<([^>]*?)>$/.freeze
 
     def add_example(example)
       c = clean_prefixed_string(example, EXAMPLE_PREFIXES)
@@ -286,6 +289,31 @@ module Tc211::Termbase
 
     def retired?
       release >= 0
+    end
+
+    def term=(value)
+      extract_domain_and_set_var(:term, value)
+    end
+
+    def alt=(value)
+      extract_domain_and_set_var(:alt, value)
+    end
+
+    def abbrev=(value)
+      extract_domain_and_set_var(:abbrev, value)
+    end
+
+    def synonyms=(value)
+      extract_domain_and_set_var(:synonyms, value)
+    end
+
+    def extract_domain_and_set_var(var_name, value)
+      if match_data = value.strip.match(DOMAIN_REGEX)
+        instance_variable_set("@#{var_name}", match_data[1].strip)
+        @domain ||= match_data[2].strip
+      else
+        instance_variable_set("@#{var_name}", value)
+      end
     end
 
     def terms
